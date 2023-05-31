@@ -7,9 +7,15 @@ import multer from "multer";
 const router = express.Router();
 
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024, parts: 4 }, fileFilter });
 
-function fileFilter(req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) {}
+function fileFilter(req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) {
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png" || file.mimetype === "image/jpg") {
+    cb(null, true);
+  } else {
+    cb(new Error("Invalid file type"));
+  }
+}
 
 router.get("/user/data", userController.fetchUser);
 router.get("/user/profile/:userId", userController.fetchProfile);

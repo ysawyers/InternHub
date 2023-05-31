@@ -28,7 +28,7 @@ export const validateEditProfileForm = (fields: ProfileFormFields) => {
       throw new Error("Image must be a jpeg, jpg, or png");
     }
 
-    if (size > 5e6) {
+    if (size > 5 * 1024 * 1024) {
       throw new Error("Image must be less than 5MB");
     }
   }

@@ -53,7 +53,7 @@ export const EditProfileModal: Component<any> = ({ setDisplayModal, profile, mut
         },
       });
     } catch (error: any) {
-      setError(error.message);
+      setError(error.response?.data || error.message);
     }
   };
 

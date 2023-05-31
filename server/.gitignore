@@ -4,3 +4,4 @@ package-lock.json
 yarn-error.log
 src/db/migrations/*
 !src/db/migrations/migration_lock.toml
+dist

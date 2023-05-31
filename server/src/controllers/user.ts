@@ -2,8 +2,9 @@ import { Request, Response } from "express";
 import { AuthorizedRequest } from "../utils/types";
 import { prisma } from "../db/connection";
 import { InvalidRequestException, errorCode } from "../utils/exceptions";
-import AWS from "aws-sdk";
 import { validateProfile } from "../utils/validation";
+import { Upload } from "@aws-sdk/lib-storage";
+import { S3Client, S3 } from "@aws-sdk/client-s3";
 
 const fetchUser = async (req: Request, res: Response) => {
   const { user } = req as AuthorizedRequest;
@@ -72,79 +73,56 @@ const updateProfile = async (req: Request, res: Response) => {
   try {
     validateProfile(req.body);
 
+    let newProfilePicture = null;
     if (Object.keys(req.files!).length > 0) {
       // @ts-ignore
       const file = req.files.profilePicture[0];
 
-      const s3 = new AWS.S3();
-      const params = {
-        Bucket: process.env.AWS_BUCKET_NAME!,
-        Key: `${new Date().getTime()}.${file.mimetype.split("/")[1]}`,
-        Body: file.buffer,
-      };
-      const options = { partSize: 5 * 1024 * 1024 };
-
-      s3.upload(params, options, async (err: any, data: any) => {
-        if (err) throw new Error("Error uploading image. Please try again later.");
-
-        await prisma.profile.update({
-          where: {
-            userId: user.id,
-          },
-          data: {
-            bio: req.body.bio,
-            profilePicture: data.Location,
-          },
-        });
-
-        await prisma.user.update({
-          where: {
-            id: user.id,
-          },
-          data: {
-            email: req.body.email,
-          },
-        });
-
-        res
-          .status(200)
-          .json({
-            email: req.body.email,
-            bio: req.body.bio,
-            profilePicture: data.Location,
-          })
-          .end();
+      const uploadToS3 = new Upload({
+        client: new S3({ region: "us-east-1" }) || new S3Client({ region: "us-east-1" }),
+        params: {
+          Bucket: process.env.AWS_BUCKET_NAME!,
+          Key: `${new Date().getTime()}.${file.mimetype.split("/")[1]}`,
+          Body: file.buffer,
+        },
+        partSize: 5 * 1024 * 1024,
       });
-    } else {
-      await prisma.profile.update({
-        where: {
-          userId: user.id,
-        },
-        data: {
-          bio: req.body.bio,
-        },
-      });
-
-      await prisma.user.update({
-        where: {
-          id: user.id,
-        },
-        data: {
-          email: req.body.email,
-        },
-      });
-
-      res
-        .status(200)
-        .json({
-          email: req.body.email,
-          bio: req.body.bio,
-          profilePicture: "",
-        })
-        .end();
+      const data: any = await uploadToS3.done();
+      newProfilePicture = data.Location;
     }
+    await prisma.profile.update({
+      where: {
+        userId: user.id,
+      },
+      data: !!newProfilePicture
+        ? {
+            bio: req.body.bio,
+            profilePicture: newProfilePicture,
+          }
+        : {
+            bio: req.body.bio,
+          },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        email: req.body.email,
+      },
+    });
+
+    res
+      .status(200)
+      .json({
+        email: req.body.email,
+        bio: req.body.bio,
+        profilePicture: !!newProfilePicture ? newProfilePicture : "",
+      })
+      .end();
   } catch (error: any) {
-    res.status(500).json({ error: error.message }).end();
+    res.status(errorCode(error)).json(error.message).end();
   }
 };
 

@@ -35,6 +35,5 @@ export const errorCode = (error: any): number => {
     return 401;
   }
 
-  /* Uncaught internal server error */
   return 500;
 };
