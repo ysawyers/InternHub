@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  refreshToken String   @unique
+  userId       Int
+  createdAt    DateTime @default(now())
+}
+
+model Listing {
+  id            Int      @id @default(autoincrement())
+  author        User     @relation(fields: [authorId], references: [id])
+  authorId      Int
+  companyName   String   @default("")
+  season        String
+  city          String
+  state         String
+  year          Int
+  monthlyBudget Int
+  description   String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Profile {
+  id             Int      @id @default(autoincrement())
+  user           User     @relation(fields: [userId], references: [id])
+  userId         Int      @unique
+  profilePicture String
+  bio            String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  email     String
+  firstName String
+  lastName  String
+  password  String
+  dob       DateTime
+  type      String
+  listings  Listing[]
+  profile   Profile?
+  sender    Messages[] @relation("sender")
+  receiver  Messages[] @relation("receiver")
+  chat      Chat[]
+  blocker BlockList[] @relation("blocker")
+  blocked BlockList[]  @relation("blocked")
+  createdAt DateTime   @default(now())
+}
+
+model Messages {
+  id           String   @id @default(uuid())
+  lastSenderId Int
+  lastMessage  String
+  sender       User     @relation("sender", fields: [senderId], references: [id])
+  senderId     Int
+  receiver     User     @relation("receiver", fields: [receiverId], references: [id])
+  receiverId   Int
+  chat         Chat[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Chat {
+  id        Int      @id @default(autoincrement())
+  messages  Messages @relation(fields: [messageId], references: [id])
+  messageId String
+  sender    User     @relation(fields: [senderId], references: [id])
+  senderId  Int
+  body      String
+  createdAt DateTime @default(now())
+}
+
+model BlockList {
+  id        Int      @id @default(autoincrement())
+  blocker   User     @relation("blocker", fields: [blockerId], references: [id])
+  blockerId Int
+  blocked   User     @relation("blocked", fields: [blockedId], references: [id])
+  blockedId Int
+  createdAt DateTime @default(now())
+}
