@@ -14,7 +14,7 @@ import bcrypt from "bcrypt";
 const createNewSession = async (res: Response, userId: number): Promise<string> => {
   const refreshToken = jwt.sign({}, process.env.AUTH_TOKEN_SECRET!);
   res.cookie("refreshToken", refreshToken, {
-    domain: process.env.NODE_ENV === "production" ? `.${process.env.CLIENT_DOMAIN}` : "127.0.0.1",
+    domain: process.env.NODE_ENV === "production" ? process.env.CLIENT_DOMAIN : "127.0.0.1",
     httpOnly: true,
     path: "/",
     maxAge: 1000 * 60 * 60 * 24 * 7 * 365 * 10,
