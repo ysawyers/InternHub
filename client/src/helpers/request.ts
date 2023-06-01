@@ -15,7 +15,7 @@ export interface Request {
 const { VITE_SERVER_DOMAIN } = import.meta.env;
 
 const refreshToken = async (): Promise<string> => {
-  const { data } = await axios.get(`http://${VITE_SERVER_DOMAIN}/public/refresh-token`, {
+  const { data } = await axios.get(`${VITE_SERVER_DOMAIN}/public/refresh-token`, {
     withCredentials: true,
   });
   return data;
@@ -66,7 +66,7 @@ export const sendRequest = async ({
 export const redirectAuthenticatedUser = () => {
   const navigate = useNavigate();
 
-  cookieStorage.setItem("refreshToken", "test", { path: "/", domain: ".railway.app" });
+  cookieStorage.setItem("refreshToken", "test", { path: "/" });
   if (!cookieStorage.getItem("refreshToken")) {
     navigate("/explore/home", { replace: true });
   }
