@@ -45,7 +45,7 @@ export const EditProfileModal: Component<any> = ({ setDisplayModal, profile, mut
       });
 
       setQueryEditProfile({
-        url: `http://${VITE_SERVER_DOMAIN}/protected/user/profile/update`,
+        url: `${VITE_SERVER_DOMAIN}/protected/user/profile/update`,
         method: "PUT",
         data: newProfileContent,
         headers: {

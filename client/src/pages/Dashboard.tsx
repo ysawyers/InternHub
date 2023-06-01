@@ -21,7 +21,7 @@ export const Dashboard: Component = () => {
   const location = useLocation();
 
   const [userQuery, setUserQuery] = createSignal<Request>({
-    url: `http://${VITE_SERVER_DOMAIN}/protected/user/data`,
+    url: `${VITE_SERVER_DOMAIN}/protected/user/data`,
     method: "GET",
   });
   const [user] = createResource(userQuery, sendRequest);
@@ -57,7 +57,7 @@ export const Dashboard: Component = () => {
   createEffect(() => {
     if (useParams().view === "home") {
       setQueryListing({
-        url: `http://${VITE_SERVER_DOMAIN}/protected/listings/recent`,
+        url: `${VITE_SERVER_DOMAIN}/protected/listings/recent`,
         method: "GET",
       });
     }

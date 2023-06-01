@@ -100,7 +100,7 @@ export const Landing: Component = () => {
 
       const res = await axios({
         method: "post",
-        url: `http://${VITE_SERVER_DOMAIN}/public/default-register`,
+        url: `${VITE_SERVER_DOMAIN}/public/default-register`,
         data: newUser,
         withCredentials: true,
       });

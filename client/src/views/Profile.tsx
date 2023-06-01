@@ -41,7 +41,7 @@ export const Profile: Component<any> = ({ user }) => {
 
   createEffect(() => {
     setProfileQuery({
-      url: `http://${VITE_SERVER_DOMAIN}/protected/user/profile/${useParams().userId}`,
+      url: `${VITE_SERVER_DOMAIN}/protected/user/profile/${useParams().userId}`,
       method: "GET",
     });
   });
@@ -122,9 +122,7 @@ export const Profile: Component<any> = ({ user }) => {
                           class="ml-auto mr-2 w-[19px] fill-white hover:cursor-pointer"
                           onClick={() =>
                             setQueryRelationship({
-                              url: `http://${VITE_SERVER_DOMAIN}/protected/messages/relationship/${
-                                profile().id
-                              }`,
+                              url: `${VITE_SERVER_DOMAIN}/protected/messages/relationship/${profile().id}`,
                               method: "GET",
                             })
                           }
@@ -164,7 +162,7 @@ export const Profile: Component<any> = ({ user }) => {
           class="px-[4em] py-3 text-red-500/90 hover:bg-slate-200/20"
           onClick={() => {
             setQueryBlockUser({
-              url: `http://${VITE_SERVER_DOMAIN}/protected/user/block/${profile().id}`,
+              url: `${VITE_SERVER_DOMAIN}/protected/user/block/${profile().id}`,
               method: "POST",
             });
           }}

@@ -21,7 +21,7 @@ export const Settings: Component = () => {
         class="m-2 w-24 rounded bg-red-500 p-2 text-white"
         onClick={() => {
           setQueryLogout({
-            url: `http://${VITE_SERVER_DOMAIN}/protected/user/logout`,
+            url: `${VITE_SERVER_DOMAIN}/protected/user/logout`,
             method: "DELETE",
             withCredentials: true,
           });

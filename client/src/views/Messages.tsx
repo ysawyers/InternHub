@@ -11,7 +11,7 @@ export const Messages: Component<any> = ({ user }) => {
   const location: any = useLocation();
 
   const [messagesQuery] = createSignal<Request>({
-    url: `http://${VITE_SERVER_DOMAIN}/protected/messages/relationships`,
+    url: `${VITE_SERVER_DOMAIN}/protected/messages/relationships`,
     method: "GET",
   });
   const [messages, { mutate }] = createResource(messagesQuery, sendRequest);

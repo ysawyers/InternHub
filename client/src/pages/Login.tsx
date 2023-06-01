@@ -47,7 +47,7 @@ export const Login: Component = () => {
 
       const res = await axios({
         method: "post",
-        url: `http://${VITE_SERVER_DOMAIN}/public/default-login`,
+        url: `${VITE_SERVER_DOMAIN}/public/default-login`,
         data: {
           email: email(),
           password: password(),

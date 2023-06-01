@@ -14,12 +14,12 @@ export const Chat: Component<any> = ({ user, updateLastMessage }) => {
   const navigate = useNavigate();
 
   const [queryChat, setQueryChat] = createSignal({
-    url: `http://${VITE_SERVER_DOMAIN}/protected/messages/chat/${location.state.relationship.messageId}`,
+    url: `${VITE_SERVER_DOMAIN}/protected/messages/chat/${location.state.relationship.messageId}`,
     method: "GET",
   } as Request);
   const [chat, { mutate }] = createResource(queryChat, sendRequest);
 
-  const [socket] = createSignal(io("http://127.0.0.1:5000"));
+  const [socket] = createSignal(io(`${VITE_SERVER_DOMAIN}`));
   const [message, setMessage] = createSignal("");
   const [isTyping, setIsTyping] = createSignal(false);
   const [displayModal, setDisplayModal] = createSignal(false);
@@ -55,7 +55,7 @@ export const Chat: Component<any> = ({ user, updateLastMessage }) => {
     });
 
     setQueryChat({
-      url: `http://${VITE_SERVER_DOMAIN}/protected/messages/chat/${location.state.relationship.messageId}`,
+      url: `${VITE_SERVER_DOMAIN}/protected/messages/chat/${location.state.relationship.messageId}`,
       method: "GET",
     } as Request);
   });

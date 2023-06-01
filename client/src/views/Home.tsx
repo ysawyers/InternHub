@@ -219,7 +219,7 @@ export const Home: Component<any> = ({ user, listings, mutate }) => {
                                 onClick={() => {
                                   if (user().id !== listing.authorId) {
                                     setQueryRelationship({
-                                      url: `http://${VITE_SERVER_DOMAIN}/protected/messages/relationship/${listing.authorId}`,
+                                      url: `${VITE_SERVER_DOMAIN}/protected/messages/relationship/${listing.authorId}`,
                                       method: "GET",
                                     });
                                     setChosenListing(listing);
@@ -234,7 +234,7 @@ export const Home: Component<any> = ({ user, listings, mutate }) => {
                             class="ml-4 w-[19px] fill-red-500 hover:cursor-pointer"
                             onClick={() => {
                               setQueryDeleteListing({
-                                url: `http://${VITE_SERVER_DOMAIN}/protected/listings/${listing.id}/remove`,
+                                url: `${VITE_SERVER_DOMAIN}/protected/listings/${listing.id}/remove`,
                                 method: "DELETE",
                               });
                             }}

@@ -59,7 +59,7 @@ export const ListingModal: Component<any> = ({ setDisplayModal, user, mutate }) 
       validateNewListing();
 
       setNewListingQuery({
-        url: `http://${VITE_SERVER_DOMAIN}/protected/listings/new`,
+        url: `${VITE_SERVER_DOMAIN}/protected/listings/new`,
         method: "POST",
         data: {
           companyName: newListing.companyName,
