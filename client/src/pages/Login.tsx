@@ -53,9 +53,6 @@ export const Login: Component = () => {
           password: password(),
         },
         withCredentials: true,
-        headers: {
-          "access-control-expose-headers": "Set-Cookie",
-        },
       });
       setAccessToken(res.data.accessToken);
 

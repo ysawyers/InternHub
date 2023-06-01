@@ -103,9 +103,6 @@ export const Landing: Component = () => {
         url: `${VITE_SERVER_DOMAIN}/public/default-register`,
         data: newUser,
         withCredentials: true,
-        headers: {
-          "access-control-expose-headers": "Set-Cookie",
-        },
       });
       setAccessToken(res.data.accessToken);
 
