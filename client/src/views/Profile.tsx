@@ -29,7 +29,13 @@ export const Profile: Component<any> = ({ user }) => {
   const [displayOptionsModal, setDisplayOptionsModal] = createSignal(false);
 
   const isMyProfile = () => user().id === parseInt(useParams().userId);
-  const age = () => new Date().getFullYear() - new Date(profile().dob).getFullYear();
+  const age = () => {
+    const diff = new Date().getFullYear() - new Date(profile().dob).getFullYear();
+    if (new Date(profile().dob).getMonth() < new Date().getMonth()) {
+      return diff;
+    }
+    return diff - 1;
+  };
 
   const navigate = useNavigate();
 

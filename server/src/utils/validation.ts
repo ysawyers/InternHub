@@ -22,6 +22,10 @@ export const validateRegister = (options: RegisterFields) => {
   if (options.password !== options.confirmPassword) {
     throw new InvalidRequestException("Passwords do not match");
   }
+
+  if (!options.dob) {
+    throw new InvalidRequestException("Must provide a valid date of birth");
+  }
 };
 
 export const validateLogin = (options: { email: string; password: string }) => {

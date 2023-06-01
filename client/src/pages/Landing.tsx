@@ -14,7 +14,7 @@ import { redirectAuthenticatedUser } from "../helpers/request";
 
 const { VITE_SERVER_DOMAIN } = import.meta.env;
 
-type errorTypes = "email" | "firstName" | "lastName" | "password" | "confirmPassword";
+type errorTypes = "email" | "firstName" | "lastName" | "password" | "confirmPassword" | "dob";
 
 interface NewUser {
   firstName: string;
@@ -35,7 +35,7 @@ export const Landing: Component = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    dob: "01/01/2000",
+    dob: "",
   } as NewUser);
 
   const [errorTag, setErrorTag] = createSignal("");
@@ -55,17 +55,17 @@ export const Landing: Component = () => {
 
     if (!vEmail) {
       setErrorTag("email");
-      throw new Error("Email is invalid!");
+      throw new Error("Email is invalid");
     }
 
     if (!vFirstNameLen || !vFirstNameAlph) {
       setErrorTag("firstName");
-      throw new Error("First name is invalid!");
+      throw new Error("First name is invalid");
     }
 
     if (!vLastNameLen || !vLastNameAlph) {
       setErrorTag("lastName");
-      throw new Error("Last name is invalid!");
+      throw new Error("Last name is invalid");
     }
 
     if (!vPassword) {
@@ -75,7 +75,12 @@ export const Landing: Component = () => {
 
     if (newUser.password !== newUser.confirmPassword) {
       setErrorTag("confirmPassword");
-      throw new Error("Passwords do not match!");
+      throw new Error("Passwords do not match");
+    }
+
+    if (!newUser.dob) {
+      setError("dob");
+      throw new Error("Must provide a valid date of birth");
     }
   };
 
@@ -139,7 +144,7 @@ export const Landing: Component = () => {
                 <input
                   type="text"
                   id="first-name"
-                  class={toggleErrorHighlight("block rounded-sm border p-1", "firstName")}
+                  class={toggleErrorHighlight("block rounded border p-1", "firstName")}
                   placeholder="John"
                   value={newUser.firstName}
                   onInput={(e) => setNewUser("firstName", e.target.value)}
@@ -152,7 +157,7 @@ export const Landing: Component = () => {
                 <input
                   type="text"
                   id="last-name"
-                  class={toggleErrorHighlight("block rounded-sm border p-1", "lastName")}
+                  class={toggleErrorHighlight("block rounded border p-1", "lastName")}
                   placeholder="Doe"
                   value={newUser.lastName}
                   onInput={(e) => setNewUser("lastName", e.target.value)}
@@ -167,11 +172,23 @@ export const Landing: Component = () => {
             <input
               type="text"
               id="email"
-              class={toggleErrorHighlight("block w-full rounded-sm border p-1", "email")}
+              class={toggleErrorHighlight("block w-full rounded border p-1", "email")}
               placeholder="name@example.com"
               value={newUser.email}
               onInput={(e) => setNewUser("email", e.target.value)}
             ></input>
+            <br></br>
+
+            <label for="dob" class="block">
+              Date of Birth
+            </label>
+            <input
+              type="date"
+              id="dob"
+              class={toggleErrorHighlight("text-md w-full rounded border p-1 focus:outline-none", "dob")}
+              onChange={(e) => setNewUser("dob", e.target.value)}
+            />
+            <br></br>
             <br></br>
 
             <label for="password" class="block">
@@ -180,7 +197,7 @@ export const Landing: Component = () => {
             <input
               type="password"
               id="password"
-              class={toggleErrorHighlight("block w-full rounded-sm border p-1", "password")}
+              class={toggleErrorHighlight("block w-full rounded border p-1", "password")}
               value={newUser.password}
               onInput={(e) => setNewUser("password", e.target.value)}
             ></input>
@@ -193,7 +210,7 @@ export const Landing: Component = () => {
               type="password"
               id="confirm-password"
               placeholder="Re-enter password"
-              class={toggleErrorHighlight("block w-full rounded-sm border p-1", "confirmPassword")}
+              class={toggleErrorHighlight("block w-full rounded border p-1", "confirmPassword")}
               value={newUser.confirmPassword}
               onInput={(e) => setNewUser("confirmPassword", e.target.value)}
             ></input>
@@ -204,14 +221,14 @@ export const Landing: Component = () => {
             </button>
           </form>
 
-          <div class="mb-4 text-center">
+          <div class="text-center">
             <A href="login" class="text-sm">
               already have an account?
             </A>
 
             <p class="mt-2 text-sm text-red-500">{error()}</p>
           </div>
-
+          {/* 
           <hr></hr>
 
           <div
@@ -220,7 +237,7 @@ export const Landing: Component = () => {
           >
             <img src={googleIcon} alt="Google Icon" class="h-8"></img>
             <p class="text-md mx-auto">Sign in with Google</p>
-          </div>
+          </div> */}
         </section>
       </div>
     </>

@@ -31,6 +31,14 @@ export const Home: Component<any> = ({ user, listings, mutate }) => {
   const [toggleSearch, setToggleSearch] = createSignal(false);
   const [searchBoxRef, setSearchBoxRef] = createSignal<HTMLElement>();
 
+  const calculateAge = (dob: string) => {
+    const diff = new Date().getFullYear() - new Date(dob).getFullYear();
+    if (new Date(dob).getMonth() < new Date().getMonth()) {
+      return diff;
+    }
+    return diff - 1;
+  };
+
   createEffect(() => {
     if (relationship.state === "ready") {
       if (Object.keys(relationship()).length === 0) {
@@ -198,7 +206,8 @@ export const Home: Component<any> = ({ user, listings, mutate }) => {
                         onClick={() => navigate(`/explore/profile/${listing.authorId}`)}
                       />
                       <h2 class="text-lg font-medium">
-                        {listing.author.firstName} {listing.author.lastName}, 18
+                        {listing.author.firstName} {listing.author.lastName},{" "}
+                        {calculateAge(listing.author.dob)}
                       </h2>
                       <div class="ml-auto flex items-center">
                         <Show

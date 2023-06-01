@@ -11,6 +11,7 @@ export interface Listing {
   author: {
     firstName: string;
     lastName: string;
+    dob: string;
     profile: {
       profilePicture: string;
     };

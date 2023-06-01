@@ -32,6 +32,7 @@ const fetchRecentListings = async (req: Request, res: Response) => {
           select: {
             firstName: true,
             lastName: true,
+            dob: true,
             profile: {
               select: {
                 profilePicture: true,
@@ -73,7 +74,7 @@ const deleteListing = async (req: Request, res: Response) => {
   try {
     const listingId = parseInt(req.params.listingId);
 
-    const deletedListing = await prisma.listing.deleteMany({
+    await prisma.listing.deleteMany({
       where: {
         AND: [
           {
