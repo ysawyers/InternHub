@@ -6,7 +6,7 @@
     "start": "npx http-server ./dist",
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview --port 8080"
   },
   "license": "MIT",
   "devDependencies": {
@@ -41,6 +41,7 @@
     "solid-js": "^1.6.10",
     "this": "^1.1.0",
     "uuid": "^9.0.0",
-    "validator": "^13.9.0"
+    "validator": "^13.9.0",
+    "vite-plugin-rewrite-all": "^1.0.1"
   }
 }

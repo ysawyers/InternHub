@@ -19,7 +19,6 @@ const createNewSession = async (res: Response, userId: number): Promise<string> 
     path: "/",
     maxAge: 1000 * 60 * 60 * 24 * 7 * 365 * 10,
     secure: process.env.NODE_ENV === "production",
-    // sameSite: "none",
   });
 
   const accessToken = jwt.sign({ id: userId }, process.env.AUTH_TOKEN_SECRET!, {
