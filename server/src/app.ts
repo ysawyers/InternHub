@@ -18,16 +18,25 @@ const requestFilter = (req: Request, res: Response) => {
   return false;
 };
 
-app.use(cors({ origin: `http://127.0.0.1:3000`, credentials: true }));
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === "production"
+        ? `https://${process.env.CLIENT_DOMAIN}`
+        : "http://127.0.0.1:3000",
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(express.json());
-app.use(
-  process.env.NODE_ENV === "production"
-    ? morgan("combined", { skip: requestFilter })
-    : morgan("dev", {
-        skip: requestFilter,
-      })
-);
+
+if (process.env.NODE_ENV === "development") {
+  app.use(
+    morgan("dev", {
+      skip: requestFilter,
+    })
+  );
+}
 
 app.use("/public", publicRoutes);
 app.use("/protected", parseUser, protectedRoutes);

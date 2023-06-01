@@ -115,7 +115,7 @@ export const Login: Component = () => {
           <p class="mt-2 text-sm text-red-500">{error()}</p>
         </div>
 
-        <hr></hr>
+        {/* <hr></hr>
 
         <div
           class="mt-5 flex w-full items-center justify-center border-2 p-2 hover:cursor-pointer"
@@ -123,7 +123,7 @@ export const Login: Component = () => {
         >
           <img src={googleIcon} alt="Google Icon" class="h-8"></img>
           <p class="text-md mx-auto">Sign in with Google</p>
-        </div>
+        </div> */}
       </section>
     </div>
   );
