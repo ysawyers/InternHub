@@ -41,7 +41,7 @@ export const sendRequest = async ({
       setAccessToken(await refreshToken());
     }
   } catch {
-    console.log("Your session has ended! Navigate back to login.");
+    setAccessToken("");
     navigate("/login", { replace: true });
   }
 
@@ -64,10 +64,10 @@ export const sendRequest = async ({
 };
 
 export const redirectAuthenticatedUser = () => {
+  const { accessToken } = useRequestContext();
   const navigate = useNavigate();
 
-  cookieStorage.setItem("refreshToken", "test", { path: "/" });
-  if (!cookieStorage.getItem("refreshToken")) {
+  if (!!accessToken()) {
     navigate("/explore/home", { replace: true });
   }
 };

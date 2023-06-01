@@ -83,6 +83,7 @@ export const ListingModal: Component<any> = ({ setDisplayModal, user, mutate }) 
         author: {
           firstName: user().firstName,
           lastName: user().lastName,
+          dob: user().dob,
           profile: {
             profilePicture: user().profile.profilePicture,
           },

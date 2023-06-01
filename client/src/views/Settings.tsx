@@ -1,16 +1,20 @@
 import { Component, createEffect, createResource, createSignal } from "solid-js";
 import { Request, sendRequest } from "../helpers/request";
 import { useNavigate } from "@solidjs/router";
+import { useRequestContext } from "../contexts/RequestProvider";
 
 const { VITE_SERVER_DOMAIN } = import.meta.env;
 
 export const Settings: Component = () => {
+  const { setAccessToken } = useRequestContext();
   const navigate = useNavigate();
+
   const [queryLogout, setQueryLogout] = createSignal({} as Request);
   const [loggedOut] = createResource(queryLogout, sendRequest);
 
   createEffect(() => {
     if (loggedOut.state === "ready") {
+      setAccessToken("");
       navigate("/login", { replace: true });
     }
   });
