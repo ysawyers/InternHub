@@ -66,7 +66,7 @@ export const sendRequest = async ({
 export const redirectAuthenticatedUser = () => {
   const navigate = useNavigate();
 
-  cookieStorage.setItem("refreshToken", "test", { path: "/" });
+  cookieStorage.setItem("refreshToken", "test", { path: "/", domain: ".railway.app" });
   if (!cookieStorage.getItem("refreshToken")) {
     navigate("/explore/home", { replace: true });
   }
