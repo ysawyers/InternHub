@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "start": "npx http-server ./dist --proxy https://localhost:8080? --omit=dev --gzip -c-1",
+    "start": "npx http-server ./dist --proxy https://0.0.0.0:8080? --omit=dev --gzip -c-1",
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview"
