@@ -43,7 +43,7 @@ const loginWithDefault = async (req: Request, res: Response) => {
     validateLogin(routeFields);
     const user = await prisma.user.findFirst({
       where: {
-        email: routeFields.email,
+        email: routeFields.email.toLowerCase(),
       },
     });
 
@@ -78,7 +78,7 @@ const registerWithDefault = async (req: Request, res: Response) => {
 
     const { id } = await prisma.user.create({
       data: {
-        email: routeFields.email,
+        email: routeFields.email.toLowerCase(),
         firstName: routeFields.firstName,
         lastName: routeFields.lastName,
         password: await bcrypt.hash(routeFields.password, 10),

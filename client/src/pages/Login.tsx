@@ -96,7 +96,7 @@ export const Login: Component = () => {
               Password
             </label>
             <input
-              type="text"
+              type="password"
               id="password"
               class={toggleErrorHighlight("w-80 rounded border p-1 focus:outline-none", "password")}
               value={password()}
