@@ -5,11 +5,8 @@ import { useRequestContext } from "../contexts/RequestProvider";
 import { useNavigate } from "@solidjs/router";
 import { createStore } from "solid-js/store";
 
-import ig from "../assets/output-onlinepngtools.png";
 import validator from "validator";
 import axios from "axios";
-
-import googleIcon from "../assets/icons8-google-48.png";
 import { redirectAuthenticatedUser } from "../helpers/request";
 
 const { VITE_SERVER_DOMAIN } = import.meta.env;
@@ -228,6 +225,7 @@ export const Landing: Component = () => {
 
             <p class="mt-2 text-sm text-red-500">{error()}</p>
           </div>
+
           {/* 
           <hr></hr>
 

@@ -18,17 +18,30 @@ const requestFilter = (req: Request, res: Response) => {
   return false;
 };
 
+const whitelist = [`https://${process.env.CLIENT_DOMAIN}`, `https://www.${process.env.CLIENT_DOMAIN}`];
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? `https://${process.env.CLIENT_DOMAIN}`
-        : "http://127.0.0.1:3000",
+    origin: (origin: any, callback) => {
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+
     credentials: true,
   })
 );
 app.use(cookieParser());
 app.use(express.json());
+
+/*
+
+process.env.NODE_ENV === "production"
+        ? `https://${process.env.CLIENT_DOMAIN}`
+        : "http://127.0.0.1:3000",
+
+*/
 
 if (process.env.NODE_ENV === "development") {
   app.use(

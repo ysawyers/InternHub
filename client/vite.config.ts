@@ -8,8 +8,8 @@ export default ({ mode }: { mode: any }) => {
   return defineConfig({
     plugins: [solidPlugin(), solidSvg()],
     server: {
-      host: "0.0.0.0",
-      port: parseInt(process.env.PORT!) | 8080,
+      host: "127.0.0.1",
+      port: 3000,
     },
     build: {
       target: "esnext",
