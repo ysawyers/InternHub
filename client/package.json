@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "serve build -s -n -L -p $PORT",
-    "build": "yarn build",
+    "build": "vite build",
     "dev": "vite"
   },
   "license": "MIT",
@@ -31,7 +31,6 @@
     "axios": "^1.4.0",
     "country-state-city": "^3.1.4",
     "fuse.js": "^6.6.2",
-    "http-server": "^14.1.1",
     "jwt-decode": "^3.1.2",
     "node": "^20.2.0",
     "prettier": "^2.8.8",
