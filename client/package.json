@@ -3,10 +3,8 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "start": "npx http-server ./dist --port 8080 -P https://0.0.0.0:8080? --ssl -C ./certs/cert.pem -K ./certs/key.pem",
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+    "start": "serve build -s -n -L -p 8080",
+    "dev": "vite"
   },
   "license": "MIT",
   "devDependencies": {
