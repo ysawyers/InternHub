@@ -18,7 +18,12 @@ const requestFilter = (req: Request, res: Response) => {
   return false;
 };
 
-const whitelist = [`https://${process.env.CLIENT_DOMAIN}`, `https://www.${process.env.CLIENT_DOMAIN}`];
+let whitelist = [`https://${process.env.CLIENT_DOMAIN}`, `https://www.${process.env.CLIENT_DOMAIN}`];
+
+if (process.env.NODE_ENV === "development") {
+  whitelist = [`http://127.0.0.1:3000`];
+}
+
 app.use(
   cors({
     origin: (origin: any, callback) => {
@@ -34,14 +39,6 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
-
-/*
-
-process.env.NODE_ENV === "production"
-        ? `https://${process.env.CLIENT_DOMAIN}`
-        : "http://127.0.0.1:3000",
-
-*/
 
 if (process.env.NODE_ENV === "development") {
   app.use(

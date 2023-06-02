@@ -63,9 +63,15 @@ export const sendRequest = async ({
   }
 };
 
-export const redirectAuthenticatedUser = () => {
-  const { accessToken } = useRequestContext();
+export const redirectAuthenticatedUser = async () => {
+  const { accessToken, setAccessToken } = useRequestContext();
   const navigate = useNavigate();
+
+  try {
+    if (!accessToken()) {
+      setAccessToken(await refreshToken());
+    }
+  } catch (error: any) {}
 
   if (!!accessToken()) {
     navigate("/explore/home", { replace: true });
