@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
+    "start": "npx http-server ./dist --port 8080 -P \"https://localhost:8080?\"",
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview"
