@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "start": "serve build -s -n -L -p $PORT",
+    "start": "serve dist -s -n -L -p $PORT",
     "build": "vite build",
     "dev": "vite"
   },
